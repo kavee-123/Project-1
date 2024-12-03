@@ -1,0 +1,13 @@
+.topicEmployeeManagement{
+  background-color: rgba(83, 211, 211, 0.901);
+  border: 2px solid;
+  border-radius: 10px;
+  border-top: 3px solid black; 
+  border-bottom: 3px solid black;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+}
+
+.employeeForm{
+  background-color: rgba(174, 181, 191, 0.589);
+}

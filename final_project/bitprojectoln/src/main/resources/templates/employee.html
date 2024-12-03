@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIT Project 2024 | D12 Practical</title>
+    <link rel="icon" href="/images/logo.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap-5.2.3/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/employee.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/fontawesome-free-6.6.0/css/all.min.css">
+
+    <!-- jQuery -->
+    <script src="/jquery/jQuery-3.7.1.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link href="/datatables/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- DataTables JS -->
+    <script src="/datatables/jquery.dataTables.min.js"></script>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- sweet alert cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+
+<body style="background-image: url(../resource/Graduated_Blue_Background.png);">
+    <!-- Employee Management page topic -->
+    <div class="container-fluid">
+        <div class="row m-3 text-center topicEmployeeManagement">
+            <div class="col-12 fw-bold">
+                <h2><i class="fa-solid fa-user me-2"></i>Employee Management</h2>
+            </div>
+        </div>
+
+        <!-- Add New Employee Modal Button -->
+        <div class="row mt-2">
+            <div class="col-6">
+
+                <!-- <div id="modifyButton">
+                    <button type="button" class="btn btn-warning" onclick="employeeFormRefill(window['editOb'], window['editRowIndex']);">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                    </button>
+
+                    <button type="button" class="btn btn-danger" onclick="employeeDelete(window['editOb'], window['editRowIndex']);">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+                    </button>
+
+                    <button type="button" class="btn btn-info" onclick="employeeView(window['editOb'], window['editRowIndex']);">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">View</h1>
+                    </button>
+                </div> -->
+
+            </div>
+            <div class="col-6 text-end">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalForm">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Employee</h1>
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Form Modal -->
+        <div class="modal fade" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Employee</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card employeeForm">
+                            <div class="card-body">
+                                <!-- action / method -->
+                                <form id="formEmployee" onsubmit="return false">
+
+                                    <!-- Start required mark -->
+                                    <div class="row mt-2">
+                                        <div class="col-12 fw-bold text-end">
+                                            <p>Required <span class="text-danger">*</span></p>
+                                        </div>
+                                    </div>
+                                    <!-- End required mark -->
+
+                                    <!-- Start Full Name -->
+                                    <div class="row mt-2">
+                                        <div class="col-3">
+                                            <label for="textFullName" class="form-label fw-bold">Full Name <span
+                                                    class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" id="textFullName"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Please Enter Full Name">
+
+                                            <div class="form-text">Example : A.B. Ruwan Kumara Perera</div>
+                                        </div>
+                                    </div>
+                                    <!-- End Full Name -->
+
+                                    <!-- Start Calling Name / NIC -->
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+                                            <label for="textCallingName" class="form-label fw-bold">Calling Name <span
+                                                    class="text-danger">*</span></label>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="textNic" class="form-label fw-bold">NIC <span
+                                                    class="text-danger">*</span></label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="textCallingName"
+                                                    onchange="callingNameValidator(this)"
+                                                    placeholder="Enter Calling Name" list="dlCallingName" required>
+                                                <datalist id="dlCallingName">
+                                                    <option value="part - 1">
+                                                    <option value="part - 2">
+                                                    <option value="part - 3">
+                                                </datalist>
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" id="textNic"
+                                                    onkeyup="nicValidator(this)" placeholder="Enter NIC" required
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Please Enter NIC">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-text">Example : Ruwan</div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-text">Example : 000000000V/000000000000</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Calling Name / NIC -->
+
+                                    <!-- Start Gender / DOB -->
+
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+
+                                            <label for="textGender" class="form-label fw-bold">Gender<span
+                                                    class="text-danger">*</span></label>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="radioBtnGender"
+                                                        class="form-check-label ms-3">Male</label>
+                                                    <input onchange="employee.gender = this.value;" type="radio"
+                                                        required class="form-check-input ms-1" id="radiomale"
+                                                        name="gender" value="Male">
+                                                    <label for="radioBtnGender"
+                                                        class="form-check-label ms-2">Female</label>
+                                                    <input onchange="employee.gender = this.value;" type="radio"
+                                                        required class="form-check-input" id="radiofemale" name="gender"
+                                                        value="Female">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="textDob" class="form-label fw-bold">DOB<span
+                                                    class="text-danger">*</span></label>
+                                            <input onkeydown="return false"
+                                                onchange="dateElementValidator(this, 'employee', 'dob')" type="date"
+                                                required class="form-control ms-1" id="dteDOB">
+                                        </div>
+                                    </div>
+                                    <!-- End Gender / DOB  -->
+
+                                    <!-- Start Email / Contact No -->
+
+                                    <div class="row mt-2">
+                                        <div class="col-7">
+                                            <label for="textEmail" class="form-label fw-bold">Email<span
+                                                    class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="textContactNo" class="form-label fw-bold">Contact<span
+                                                    class="text-danger">*</span></label>
+                                        </div>
+
+                                        <div class="col-7">
+                                            <input type="email" required class="form-control" placeholder="Enter Email"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Please Enter Email Address" id="employeeEmail"
+                                                onkeyup="textValidator(this, '^[A-Za-z0-9]{5,20}[@][a-z]{4,8}[.][a-z]{2,3}$', 'employee', 'email')">
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="text" class="form-control" required
+                                                placeholder="Enter Mobile Number" id="textMobile"
+                                                onkeyup="textValidator(this, '^[0][7][01245678][0-9]{7}$','employee', 'mobileno')">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="form-text">Example: test@gmail.com</div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="form-text ms-3">Example: 07xxxxxxxx</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- End Email / Contact No -->
+
+                                    <!-- Start CivilStatus -->
+
+                                    <div class="row">
+                                        <div class="col-5 mt-2">
+                                            <label for="textCivilStatus" class="form-label fw-bold">Civil Status <span
+                                                    class="text-danger">*</span></label>
+                                            <select name="" id="selectCivilStatus" required class="form-select"
+                                                onchange="selectStaticElementValidator(this, 'employee', 'civilstaus')">
+                                                <option value="" selected disabled>Select Civil Status</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Married">Married</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-6 mt-2">
+                                            <label for="textLandNo" class="form-label fw-bold">Land No</label>
+                                            <input type="text" class="form-control" id="textLandNo"
+                                                placeholder="Enter Land No"
+                                                onkeyup="textValidator(this, '^[0][012345689][0-9]{8}$','employee', 'landno')">
+                                        </div>
+                                    </div>
+                                    <!-- End CivilStatus -->
+
+                                    <div class="row mt-2"></div>
+                                    <div class="row mt-2"></div>
+                                    <div class="row mt-2"></div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="textDesignation" class="form-label fw-bold">Designation <span
+                                                    class="text-danger">*</span></label>
+                                            <select name="" id="selectDesignation" required class="form-select"
+                                                onchange="selectDianamicElementValidator(this, 'employee', 'designation_id')">
+                                                <option value="" selected disabled>Select Designation</option>
+                                                <option value="Manager">Mnager</option>
+                                                <option value="Cashier">Cashier</option>
+                                                <option value="AS-Manager">AS-Manager</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="textEmployeeStatus" class="form-label fw-bold">Employee Status
+                                                <span class="text-danger">*</span></label>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <select name="" id="selectEmployeeStatus" required
+                                                        class="form-select"
+                                                        onchange="selectDianamicElementValidator(this, 'employee', 'employeestatus')">
+                                                        <option value="" selected disabled>Select Employee Status
+                                                        </option>
+                                                        <option value="Working">Working</option>
+                                                        <option value="Resign">Resign</option>
+                                                        <option value="Removed">Removed</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Buttons -->
+
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-start">
+                                            <button type="button" class="btn btn-outline-info me-2"><i
+                                                    class="fa-solid fa-trash"></i>Clear</button>
+
+                                            <div id="modifyButton">
+
+
+                                                <button type="button" class="btn btn-danger"
+                                                    onclick="employeeDelete(window['editOb'], window['editRowIndex']);">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+                                                </button>
+
+                                                <button type="button" class="btn btn-info"
+                                                    onclick="employeeView(window['editOb'], window['editRowIndex']);">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">View</h1>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 text-end">
+                                            <button type="submit" onclick="buttonEmployeeUpdate()"
+                                                class="btn btn-outline-warrning me-2"><i
+                                                    class="fa-solid fa-pen-to-square"></i>Update</button>
+
+                                            <button type="submit" class="btn btn-outline-success"
+                                                onclick="buttonEmployeeSubmit()">Submit</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Start Employee Table Area -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover table table-bordered" id="tableEmployee"
+                            style="padding-bottom: 10px;">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>FUll Name</th>
+                                    <th>Nic</th>
+                                    <th>Mobile</th>
+                                    <th>DOB</th>
+                                    <th>Civil Status</th>
+                                    <th>Birth Year</th>
+                                    <th>Designation</th>
+                                    <th>Status</th>
+                                    <th>Modify</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody id="tableEmployeeBody">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Kaveesha Nethmina Lekamge</td>
+                                    <td>Kaveesha</td>
+                                    <td>1999-03-09</td>
+                                    <td>Male</td>
+                                    <td>kaveeshanethmina@gmail.com</td>
+                                    <td>0785458254</td>
+                                    <td>
+                                        <button type="button" class="btnEdit btn btn-warning"
+                                            style="width: 80px;">Edit</button>
+                                        <button type="button" class="btnView mt-2 btn btn-success"
+                                            style="width: 80px;">View</button>
+                                        <button type="button" class="btnDelete mt-2 btn btn-danger"
+                                            style="width: 80px;">Delete</button>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Charith Madhushnka</td>
+                                    <td>Charith</td>
+                                    <td>1993-08-27</td>
+                                    <td>Male</td>
+                                    <td>charith@gmail.com</td>
+                                    <td>0715558257</td>
+                                    <td>
+                                        <button type="button" class="btnEdit btn btn-warning"
+                                            style="width: 80px;">Edit</button>
+                                        <button type="button" class="btnView mt-2 btn btn-success"
+                                            style="width: 80px;">View</button>
+                                        <button type="button" class="btnDelete mt-2 btn btn-danger"
+                                            style="width: 80px;">Delete</button>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>3</td>
+                                    <td>Osanda Gamage</td>
+                                    <td>Osanda</td>
+                                    <td>1996-05-27</td>
+                                    <td>Male</td>
+                                    <td>osanda@gmail.com</td>
+                                    <td>0775548257</td>
+                                    <td>
+                                        <button type="button" class="btnEdit btn btn-warning"
+                                            style="width: 80px;">Edit</button>
+                                        <button type="button" class="btnView mt-2 btn btn-success"
+                                            style="width: 80px;">View</button>
+                                        <button type="button" class="btnDelete mt-2 btn btn-danger"
+                                            style="width: 80px;">Delete</button>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>4</td>
+                                    <td>Akila Mihiranga</td>
+                                    <td>Akila</td>
+                                    <td>1993-02-27</td>
+                                    <td>Male</td>
+                                    <td>akila@gmail.com</td>
+                                    <td>0773558257</td>
+                                    <td>
+                                        <button type="button" class="btnEdit btn btn-warning"
+                                            style="width: 80px;">Edit</button>
+                                        <button type="button" class="btnView mt-2 btn btn-success"
+                                            style="width: 80px;">View</button>
+                                        <button type="button" class="btnDelete mt-2 btn btn-danger"
+                                            style="width: 80px;">Delete</button>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>5</td>
+                                    <td>Milanda Wijekoon</td>
+                                    <td>Milanda</td>
+                                    <td>1993-07-17</td>
+                                    <td>Male</td>
+                                    <td>milanda@gmail.com</td>
+                                    <td>0716748257</td>
+                                    <td>
+                                        <button type="button" class="btnEdit btn btn-warning"
+                                            style="width: 80px;">Edit</button>
+                                        <button type="button" class="btnView mt-2 btn btn-success"
+                                            style="width: 80px;">View</button>
+                                        <button type="button" class="btnDelete mt-2 btn btn-danger"
+                                            style="width: 80px;">Delete</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- End Employee Table Area -->
+
+    </div>
+
+    </div>
+
+    <!-- View Employee Form -->
+
+    <div class="modal fade" id="modalEmployeeFormView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">View Employee</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card employeeForm">
+                        <div class="card-body">
+                            <table class="table table-striped table-hover table table-bordered" id="tableEmployeeView">
+                                <tr>
+                                    <th>Employee Full Name</th>
+                                    <td id="employeeFullname"></td>
+                                </tr>
+                                <tr>
+                                    <th>Employee Callingname</th>
+                                    <td id="employeeCallingname"></td>
+                                </tr>
+                                <tr>
+                                    <th>Employee NIC</th>
+                                    <td id="employeenic"></td>
+                                </tr>
+                                <tr>
+                                    <th>Employee Designation</th>
+                                    <td id="employeeDesignation"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info fw-bold" onclick="buttonPrintRow()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="/jquery/jQuery-3.7.1.min.js"></script> -->
+    <script src="/script/common.js"></script>
+    <script src="/script/commonTableFunction.js"></script>
+    <script src="/script/validationFunction.js"></script>
+    <script src="/uicontroller/employee.js"></script>
+
+</body>
+
+</html>
